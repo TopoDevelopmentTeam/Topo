@@ -83,8 +83,12 @@ def main():
         msg = " ".join(args)
         search = wikipedia.search(msg)
         bot_msg = '```'
-        for i in range(0, 5):
-            bot_msg += '{}: {}\n'.format(i, search[i])
+        if (len(search) < 5):
+            cant = len(search)
+        else:
+            cant = 5
+        for i in range(0, cant):
+            bot_msg += '{}: {}\n'.format(i, search[i])        
         bot_msg += '```'
         await bot.send_message(ctx.message.author, bot_msg)
         index = await bot.wait_for_message(author=ctx.message.author, check=check)
