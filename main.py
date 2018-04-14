@@ -77,7 +77,8 @@ def main():
         '''
         Searches a Japanesse Query in Wikipedia.
         '''
-        await bot.delete_message(ctx.message)
+        #author = ctx.message.author
+        #await bot.delete_message(ctx.message)
         wikipedia.set_lang('ja')
         msg = " ".join(args)
         search = wikipedia.search(msg)
@@ -85,12 +86,12 @@ def main():
         for i in range(0, 5):
             bot_msg += '{}: {}\n'.format(i, search[i])
         bot_msg += '```'
-        await bot.send_message(ctx.message.author, bot_msg)
-        index = await bot.wait_for_message(author=ctx.message.author, check=check)
+        await bot.send_message(author, bot_msg)
+        index = await bot.wait_for_message(author=author, check=check)
         j = int(index.content)
         wiki_summary = wikipedia.summary(search[j], sentences=1)
         link = 'https://ja.wikipedia.org/wiki/{}'.format(search[j])
-        await bot.send_message(ctx.message.author, '{}\n{}'.format(wiki_summary, link))
+        await bot.send_message(author, '{}\n{}'.format(wiki_summary, link))
 
     def check(msg):
         return (msg.content in ['0', '1', '2', '3', '4'])
